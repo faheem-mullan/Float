@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>trashcan</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <main id="app">
+      <header id="top-bar">
+        <h1>trashcan</h1>
+        <div id="mode-buttons">
+          <button id="cleanup-btn" type="button">🧹</button>
+          <button id="throwback-btn" type="button">🤔 What's on my mind</button>
+        </div>
+      </header>
+
+      <div id="input-box">
+        <input id="thought-input" type="text" placeholder="Drop a random thought, link, or reminder..." />
+        <button id="drop-btn" type="button">Drop</button>
+      </div>
+
+      <nav id="filters">
+        <button class="filter-btn active" data-filter="inbox" type="button">Inbox</button>
+        <button class="filter-btn" data-filter="keep" type="button">Keep</button>
+        <button class="filter-btn" data-filter="do" type="button">Do</button>
+        <button class="filter-btn" data-filter="learn" type="button">Learn</button>
+      </nav>
+
+     
+      <section id="board"></section>
+
+      
+      <section id="focus-overlay" class="hidden">
+        <div id="focus-card">
+          <p id="focus-label"></p>
+          <h2 id="focus-text"></h2>
+          <div id="focus-actions"></div>
+          <button id="close-focus-btn" type="button">Close</button>
+        </div>
+      </section>
+    </main>
+
+    <script src="app.js"></script>
+  </body>
+</html>
