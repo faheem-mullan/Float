@@ -51,7 +51,8 @@ button:hover {
   margin-bottom: 16px;
 }
 
-#thought-input {
+#thought-input,
+#color-input {
   flex: 1;
   padding: 10px 14px;
   border-radius: 8px;
@@ -59,6 +60,16 @@ button:hover {
   background-color: #1a1a1a;
   color: #f3f4f6;
   font-size: 1rem;
+}
+
+#color-input {
+  flex: 0 0 auto;
+  cursor: pointer;
+}
+
+#color-input option {
+  background-color: #1a1a1a;
+  color: #f3f4f6;
 }
 
 
@@ -78,4 +89,29 @@ button:hover {
   flex-direction: column;
   justify-content: space-between;
   gap: 10px;
+}
+
+.card[data-color="lavender"] {
+  background-color: #211e2a;
+  border-color: #55486f;
+}
+
+.card[data-color="blue"] {
+  background-color: #1b232d;
+  border-color: #405b78;
+}
+
+.card[data-color="mint"] {
+  background-color: #1b2824;
+  border-color: #426b5b;
+}
+
+.card[data-color="peach"] {
+  background-color: #2b211d;
+  border-color: #805640;
+}
+
+.card[data-color="rose"] {
+  background-color: #2b1f25;
+  border-color: #774958;
 }

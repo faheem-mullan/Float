@@ -1,16 +1,19 @@
-const app = document.getElementById("app");
 const thoughtInput = document.getElementById("thought-input");
+const colorInput = document.getElementById("color-input");
 const dropBtn = document.getElementById("drop-btn");
 const board = document.getElementById("board");
 
-const lifespan=10*1000; 
-
+const NOTE_LIFESPAN_MS = 24 * 60 * 60 * 1000;
+const EXPIRY_CHECK_INTERVAL_MS = 1000;
 const thoughts = [];
+
+const isExpired = (note, now = Date.now()) => now >= note.expiresAt;
 
 const renderBoard = () => {
   board.innerHTML = "";
+  const activeThoughts = thoughts.filter((item) => !isExpired(item));
 
-  if (thoughts.length === 0) {
+  if (activeThoughts.length === 0) {
     const emptyState = document.createElement("div");
     emptyState.className = "empty-state";
 
@@ -24,9 +27,10 @@ const renderBoard = () => {
     return;
   }
 
-  for (const item of thoughts) {
+  for (const item of activeThoughts) {
     const card = document.createElement("div");
     card.className = "card";
+    card.dataset.color = item.color;
 
     const text = document.createElement("p");
     text.className = "card-text";
@@ -43,27 +47,65 @@ const renderBoard = () => {
   }
 };
 
+const removeExpiredThoughts = () => {
+  const activeThoughts = thoughts.filter((item) => !isExpired(item));
+
+  if (activeThoughts.length === thoughts.length) {
+    return;
+  }
+
+  thoughts.splice(0, thoughts.length, ...activeThoughts);
+  renderBoard();
+};
 
 const drop = () => {
-  const date=Date.now();
   const cleanText = thoughtInput.value.trim();
 
   if (cleanText === "") {
     return;
   }
 
+  removeExpiredThoughts();
+  const createdAt = Date.now();
   thoughts.push({
-    id:crypto.randomUUID(),
+    id: crypto.randomUUID(),
     text: cleanText,
-    createdAt: date,
-    color:"default",
-    completed:false,
-    expiresAt:date + lifespan
+    color: colorInput.value,
+    completed: false,
+    createdAt,
+    expiresAt: createdAt + NOTE_LIFESPAN_MS
   });
 
   thoughtInput.value = "";
   renderBoard();
 };
 
+let expiryIntervalId;
+
+const startExpiryChecks = () => {
+  removeExpiredThoughts();
+
+  if (expiryIntervalId === undefined) {
+    expiryIntervalId = window.setInterval(removeExpiredThoughts, EXPIRY_CHECK_INTERVAL_MS);
+  }
+};
+
+const stopExpiryChecks = () => {
+  if (expiryIntervalId === undefined) {
+    return;
+  }
+
+  window.clearInterval(expiryIntervalId);
+  expiryIntervalId = undefined;
+};
+
 dropBtn.addEventListener("click", drop);
+document.addEventListener("visibilitychange", () => {
+  if (document.visibilityState === "visible") {
+    removeExpiredThoughts();
+  }
+});
+window.addEventListener("pagehide", stopExpiryChecks);
+window.addEventListener("pageshow", startExpiryChecks);
 renderBoard();
+startExpiryChecks();
