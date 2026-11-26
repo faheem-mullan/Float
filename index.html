@@ -3,28 +3,62 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>trashcan</title>
+    <title>Float</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,500..700&family=IBM+Plex+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
     <main id="app">
       <header id="top-bar">
-        <h1>Float</h1>
-        
+        <h1 class="brand">
+          Float
+          <svg class="brand-doodle" viewBox="0 0 84 48" aria-hidden="true" focusable="false">
+            <path d="M7 32c7-4 12-4 18-2m-11 9c5-3 9-3 13-2" />
+            <path d="M26 23c15-4 34-12 49-16-5 11-12 24-19 35-2-5-4-9-7-13-7-2-15-4-23-6Z" />
+            <path d="M49 29c7-6 16-14 26-21m-27 21 3 10" />
+            <path d="M27 24c17-3 33-10 48-17" opacity=".45" />
+          </svg>
+        </h1>
       </header>
 
       <div id="input-box">
         <input id="thought-input" type="text" placeholder="Drop a random thought, link, or reminder..." />
-        <select id="color-input" aria-label="Note color">
-          <option value="lavender">Lavender</option>
-          <option value="blue">Blue</option>
-          <option value="mint">Mint</option>
-          <option value="peach">Peach</option>
-          <option value="rose">Rose</option>
-        </select>
+        <fieldset id="color-palette">
+          <legend>Color</legend>
+          <label class="color-option">
+            <input type="radio" name="note-color" value="yellow" aria-label="Warm Sand" />
+            <span class="color-swatch" data-color="yellow"></span>
+          </label>
+          <label class="color-option">
+            <input type="radio" name="note-color" value="lavender" aria-label="Soft Periwinkle" checked />
+            <span class="color-swatch" data-color="lavender"></span>
+          </label>
+          <label class="color-option">
+            <input type="radio" name="note-color" value="blue" aria-label="Warm Peach" />
+            <span class="color-swatch" data-color="blue"></span>
+          </label>
+          <label class="color-option">
+            <input type="radio" name="note-color" value="mint" aria-label="Muted Sage" />
+            <span class="color-swatch" data-color="mint"></span>
+          </label>
+          <label class="color-option">
+            <input type="radio" name="note-color" value="peach" aria-label="Soft Terracotta" />
+            <span class="color-swatch" data-color="peach"></span>
+          </label>
+          <label class="color-option">
+            <input type="radio" name="note-color" value="rose" aria-label="Warm Alabaster" />
+            <span class="color-swatch" data-color="rose"></span>
+          </label>
+        </fieldset>
         <button id="drop-btn" type="button">Drop</button>
       </div>
 
+      <p id="storage-status" role="status" aria-live="polite" hidden></p>
       <section id="board"></section>
     </main>
 
